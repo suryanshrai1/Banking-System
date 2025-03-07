@@ -76,7 +76,7 @@ class BankAccount {
     }
 }
 
-public class Banking-System {
+public class BankingSystem {
     private static Map<String, BankAccount> accounts = new HashMap<>();
 
     public static void createAccount(Scanner scanner) {
