@@ -78,6 +78,94 @@ class BankAccount {
 
 public class BankingSystem {
     private static Map<String, BankAccount> accounts = new HashMap<>();
+    private static final String ADMIN_PASSWORD = "Admin#bank2"; // Example admin password
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\n--- Bank System Menu ---");
+            System.out.println("1. Admin Login");
+            System.out.println("2. Client Login");
+            System.out.println("3. Exit");
+            System.out.print("Enter Choice: ");
+            
+            int userType = scanner.nextInt();
+
+            if (userType == 1) {
+                // Admin Login
+                System.out.print("Enter Admin Password: ");
+                String password = scanner.next();
+                if (!password.equals(ADMIN_PASSWORD)) {
+                    System.out.println("Invalid Password! Access Denied.");
+                    continue;
+                }
+                // Admin Menu
+                adminMenu(scanner);
+            } else if (userType == 2) {
+                // Client Menu
+                clientMenu(scanner);
+            } else if (userType == 3) {
+                System.out.println("Thank you for using the Bank System!");
+                scanner.close();
+                return;
+            } else {
+                System.out.println("Invalid Choice! Please try again.");
+            }
+        }
+    }
+
+    private static void adminMenu(Scanner scanner) {
+        while (true) {
+            System.out.println("\n--- Admin Menu ---");
+            System.out.println("1. Create Account");
+            System.out.println("2. Exit to Main Menu");
+            System.out.print("Enter Choice: ");
+            
+            int choice = scanner.nextInt();
+
+            if (choice == 1) {
+                createAccount(scanner);
+            } else if (choice == 2) {
+                return; // Exit to main menu
+            } else {
+                System.out.println("Invalid Choice! Please try again.");
+            }
+        }
+    }
+
+    private static void clientMenu(Scanner scanner) {
+        while (true) {
+            System.out.println("\n--- Client Menu ---");
+            System.out.println("1. Deposit");
+            System.out.println("2. Withdraw");
+            System.out.println("3. Check Balance");
+            System.out.println("4. View Transaction History");
+            System.out.println("5. Exit to Main Menu");
+            System.out.print("Enter Choice: ");
+            
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    performTransaction(scanner, "Deposit");
+                    break;
+                case 2:
+                    performTransaction(scanner, "Withdraw");
+                    break;
+                case 3:
+                    checkBalance(scanner);
+                    break;
+                case 4:
+                    viewTransactionHistory(scanner);
+                    break;
+                case 5:
+                    return; // Exit to main menu
+                default:
+                    System.out.println("Invalid Choice! Please try again.");
+            }
+        }
+    }
 
     public static void createAccount(Scanner scanner) {
         System.out.print("Enter Account Number: ");
@@ -153,46 +241,5 @@ public class BankingSystem {
         }
 
         account.showTransactionHistory();
-    }
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.println("\n--- Bank System Menu ---");
-            System.out.println("1. Create Account");
-            System.out.println("2. Deposit");
-            System.out.println("3. Withdraw");
-            System.out.println("4. Check Balance");
-            System.out.println("5. View Transaction History");
-            System.out.println("6. Exit");
-            System.out.print("Enter Choice: ");
-            
-            int choice = scanner.nextInt();
-
-            switch (choice) {
-                case 1:
-                    createAccount(scanner);
-                    break;
-                case 2:
-                    performTransaction(scanner, "Deposit");
-                    break;
-                case 3:
-                    performTransaction(scanner, "Withdraw");
-                    break;
-                case 4:
-                    checkBalance(scanner);
-                    break;
-                case 5:
-                    viewTransactionHistory(scanner);
-                    break;
-                case 6:
-                    System.out.println("Thank you for using the Bank System!");
-                    scanner.close();
-                    return;
-                default:
-                    System.out.println("Invalid Choice! Please try again.");
-            }
-        }
     }
 }
